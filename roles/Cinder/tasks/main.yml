@@ -1,0 +1,30 @@
+---
+
+- name: Install dnf plugins core
+  dnf:
+    name: dnf-plugins-core
+    state: present
+
+- name: Enable CRB repository
+  command: dnf config-manager --set-enabled crb
+
+- name: Install OpenStack Zed repository
+  dnf:
+    name: centos-release-openstack-zed
+    state: present
+
+- name: Install OpenStack Python client on CentOS
+  dnf:
+    name: python3-openstackclient
+    state: present
+
+- name: Install OpenStack SELinux on CentOS
+  dnf:
+    name: openstack-selinux
+    state: present
+
+- name: Install Cinder on server3 (CentOS)
+  when: ansible_distribution == "CentOS"
+  dnf:
+    name: openstack-cinder
+    state: present

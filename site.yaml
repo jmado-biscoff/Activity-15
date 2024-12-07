@@ -1,0 +1,31 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: Install Updates (Ubuntu)
+    apt:
+      upgrade: dist
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Install Updates (CentOS)
+    dnf:
+      update_cache: yes
+    when: ansible_distribution == "CentOS"
+
+- hosts: server1
+  become: true
+  roles:
+    - Neutron
+
+- hosts: server2
+  become: true
+  roles:
+    - Horizon
+
+- hosts: server3
+  become: true
+  roles:
+    - Cinder
